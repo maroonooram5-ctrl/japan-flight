@@ -109,12 +109,32 @@ function searchFlight() {
         return;
     }
     const flights = [
-        { airline:"진에어", price:179000 },
-        { airline:"에어서울", price:184000 },
-        { airline:"티웨이항공", price:193000 },
-        { airline:"제주항공", price:214000 },
-        { airline:"대한항공", price:347000 }
-    ];
+    {
+        airline:"진에어",
+        price:179000,
+        url:"https://www.jinair.com"
+    },
+    {
+        airline:"에어서울",
+        price:184000,
+        url:"https://flyairseoul.com"
+    },
+    {
+        airline:"티웨이항공",
+        price:193000,
+        url:"https://www.twayair.com"
+    },
+    {
+        airline:"제주항공",
+        price:214000,
+        url:"https://www.jejuair.net"
+    },
+    {
+        airline:"대한항공",
+        price:347000,
+        url:"https://www.koreanair.com"
+    }
+];
 
     let result = flights;
 
