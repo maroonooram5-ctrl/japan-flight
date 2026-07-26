@@ -12,3 +12,20 @@ const airports = {
 function searchFlight() {
     document.getElementById("result").style.display = "block";
 }
+const region = document.getElementById("region");
+const airport = document.getElementById("airport");
+
+function updateAirport() {
+    airport.innerHTML = "";
+
+    airports[region.value].forEach(code => {
+        const option = document.createElement("option");
+        option.textContent = code;
+        option.value = code;
+        airport.appendChild(option);
+    });
+}
+
+region.addEventListener("change", updateAirport);
+
+updateAirport();
