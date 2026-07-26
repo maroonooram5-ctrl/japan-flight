@@ -157,6 +157,13 @@ returnRegion.addEventListener("change", function(){
     updateReturnAirport();
 
 });
+airport.addEventListener("change", function(){
+
+    if(tripType.value==="오픈조"){
+        updateReturnAirport();
+    }
+
+});
 tripType.addEventListener("change", function(){
 
     if(tripType.value==="오픈조"){
@@ -314,4 +321,7 @@ ${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
 
 }
 updateAirport();
-updateReturnAirport();
+
+if(tripType.value==="오픈조"){
+    updateReturnAirport();
+}
