@@ -262,24 +262,49 @@ function createResult(destination, isOpenJaw = false, returnAirport = null) {
 function searchFlights() {
 
     if (!departDate.value || !returnDate.value) {
-
         alert("출발일과 귀국일을 선택하세요.");
-
         return;
-
     }
 
     if (departDate.value > returnDate.value) {
-
         alert("귀국일은 출발일 이후여야 합니다.");
-
         return;
-
     }
 
-    let results = [];
+    const results = [];
+
+    const departure =
+        departureSelect.value === "ALL"
+            ? "전체 출발"
+            : departureSelect.options[departureSelect.selectedIndex].text;
 
     const destination = airportSelect.value;
+
+    const addResult = (arrival, type, returnAirport) => {
+
+        const price = randomPrice();
+
+        if (price > Number(priceSelect.value)) return;
+
+        results.push({
+
+            airline: AIRLINES[Math.floor(Math.random() * AIRLINES.length)],
+
+            departure,
+
+            arrival,
+
+            returnAirport,
+
+            type,
+
+            time: randomTime(),
+
+            price
+
+        });
+
+    };
 
     if (destination === "ALL") {
 
@@ -287,13 +312,21 @@ function searchFlights() {
 
             region.forEach(airport => {
 
-                results.push(createResult(airport.code));
+                addResult(
+                    airportLabel(airport.code),
+                    "왕복",
+                    airportLabel(airport.code)
+                );
 
                 if (tripTypeSelect.value === "openjaw") {
 
-                    (OPEN_JAW[airport.code] || []).forEach(open => {
+                    (OPEN_JAW[airport.code] || []).forEach(code => {
 
-                        results.push(createResult(airport.code, true, open));
+                        addResult(
+                            airportLabel(airport.code),
+                            "오픈조",
+                            airportLabel(code)
+                        );
 
                     });
 
@@ -305,13 +338,21 @@ function searchFlights() {
 
     } else {
 
-        results.push(createResult(destination));
+        addResult(
+            airportLabel(destination),
+            "왕복",
+            airportLabel(destination)
+        );
 
         if (tripTypeSelect.value === "openjaw") {
 
-            (OPEN_JAW[destination] || []).forEach(open => {
+            (OPEN_JAW[destination] || []).forEach(code => {
 
-                results.push(createResult(destination, true, open));
+                addResult(
+                    airportLabel(destination),
+                    "오픈조",
+                    airportLabel(code)
+                );
 
             });
 
@@ -319,13 +360,11 @@ function searchFlights() {
 
     }
 
-    const limit = Number(priceSelect.value);
-
-    results = results.filter(item => item.price <= limit);
-
     results.sort((a, b) => a.price - b.price);
 
     renderResults(results);
+
+}
 
 }
 // =============================
@@ -456,3 +495,30 @@ departDate.addEventListener("change", () => {
 initialize();
 
 setToday();
+// =============================
+// Part 6 / 6
+// =============================
+
+// 가격 기본값
+if (priceSelect.value === "") {
+    priceSelect.value = "300000";
+}
+
+// 왕복/오픈조 변경 시 귀국공항 갱신
+tripTypeSelect.addEventListener("change", () => {
+    populateReturnAirport();
+});
+
+// 지역 변경 시 도착공항 갱신
+regionSelect.addEventListener("change", () => {
+    populateAirport();
+});
+
+// 도착공항 변경 시 귀국공항 갱신
+airportSelect.addEventListener("change", () => {
+    populateReturnAirport();
+});
+
+// 페이지 최초 로딩
+populateAirport();
+populateReturnAirport();
