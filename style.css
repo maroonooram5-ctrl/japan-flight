@@ -1,0 +1,54 @@
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+    background:#f4f6fb;
+}
+
+.container{
+    max-width:430px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+h1{
+    text-align:center;
+}
+
+select,
+input,
+button{
+    width:100%;
+    padding:14px;
+    margin-top:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+button{
+    background:#1976d2;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+
+.result{
+    margin-top:20px;
+    background:white;
+    border-radius:16px;
+    padding:16px;
+}
+
+.price{
+    font-size:28px;
+    font-weight:bold;
+    color:#1976d2;
+}
