@@ -153,7 +153,11 @@ function updateReturnAirport(){
     });
 
 }
+returnRegion.addEventListener("change", function(){
 
+    updateReturnAirport();
+
+});
 tripType.addEventListener("change", function(){
 returnRegion.addEventListener("change", function () {
     updateReturnAirport();
