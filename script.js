@@ -273,6 +273,7 @@ result.forEach((f,index)=>{
 ${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
 
 <div class="airline">✈️ ${f.airline}</div>
+<p>비행시간 : ${f.time}</p>
 
 <p>여정 : ${tripType.value==="왕복" ? "왕복" : "오픈조"}</p>
 
@@ -287,7 +288,9 @@ ${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
 <div class="price">
     실제 결제금액 : ${f.price.toLocaleString()}원
 </div>
-
+<div class="booking">
+    <a href="${f.url}" target="_blank">예약하러 가기</a>
+</div>
 <div class="booking">
     <a href="${f.url}" target="_blank">
         공식 홈페이지 예약
