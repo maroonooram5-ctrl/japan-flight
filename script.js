@@ -1,427 +1,458 @@
-const airports = {
-    "전체": [
-        "CTS(삿포로)",
-        "NRT(도쿄)",
-        "IBR(이바라키)",
-        "NGO(나고야)",
-        "FSZ(시즈오카)",
-        "KIX(오사카)",
-        "UKB(고베)",
-        "HIJ(히로시마)",
-        "YGJ(요나고)",
-        "TAK(다카마쓰)",
-        "MYJ(마쓰야마)",
-        "TKS(도쿠시마)",
-        "FUK(후쿠오카)",
-        "KKJ(기타큐슈)",
-        "HSG(사가)",
-        "KMJ(구마모토)",
-        "OIT(오이타)",
-        "KOJ(가고시마)",
-        "OKA(나하)"
-    ],
+// =============================
+// 일본 최저 항공권 검색
+// Part 1 / 6
+// =============================
 
+const REGIONS = {
     "홋카이도": [
-        "CTS(삿포로)"
+        { code: "CTS", name: "삿포로" }
     ],
 
     "간토": [
-        "NRT(도쿄)",
-        "IBR(이바라키)"
+        { code: "NRT", name: "도쿄(나리타)" },
+        { code: "IBR", name: "이바라키" }
     ],
 
     "주부": [
-        "NGO(나고야)",
-        "FSZ(시즈오카)"
+        { code: "NGO", name: "나고야" },
+        { code: "FSZ", name: "시즈오카" }
     ],
 
     "간사이": [
-        "KIX(오사카)",
-        "UKB(고베)"
+        { code: "KIX", name: "오사카(간사이)" },
+        { code: "UKB", name: "고베" }
     ],
 
     "주고쿠": [
-        "HIJ(히로시마)",
-        "YGJ(요나고)"
+        { code: "HIJ", name: "히로시마" },
+        { code: "YGJ", name: "요나고" }
     ],
 
     "시코쿠": [
-        "TAK(다카마쓰)",
-        "MYJ(마쓰야마)",
-        "TKS(도쿠시마)"
+        { code: "TAK", name: "다카마쓰" },
+        { code: "MYJ", name: "마쓰야마" },
+        { code: "TKS", name: "도쿠시마" }
     ],
 
     "큐슈": [
-        "FUK(후쿠오카)",
-        "KKJ(기타큐슈)",
-        "HSG(사가)",
-        "KMJ(구마모토)",
-        "OIT(오이타)",
-        "KOJ(가고시마)"
+        { code: "FUK", name: "후쿠오카" },
+        { code: "KKJ", name: "기타큐슈" },
+        { code: "HSG", name: "사가" },
+        { code: "KMJ", name: "구마모토" },
+        { code: "OIT", name: "오이타" },
+        { code: "KOJ", name: "가고시마" }
     ],
 
     "오키나와": [
-        "OKA(나하)"
+        { code: "OKA", name: "나하" }
     ]
 };
-const openJawMap = {
 
-    // 홋카이도
-    "CTS(삿포로)": [
-        "CTS(삿포로)"
-    ],
+const OPEN_JAW = {
 
-    // 간토
-    "NRT(도쿄)": [
-        "NRT(도쿄)",
-        "IBR(이바라키)"
-    ],
-    "IBR(이바라키)": [
-        "IBR(이바라키)",
-        "NRT(도쿄)"
-    ],
+    NRT: ["IBR"],
+    IBR: ["NRT"],
 
-    // 주부
-    "NGO(나고야)": [
-        "NGO(나고야)",
-        "FSZ(시즈오카)",
-        "KIX(오사카)"
-    ],
-    "FSZ(시즈오카)": [
-        "FSZ(시즈오카)",
-        "NGO(나고야)"
-    ],
+    NGO: ["FSZ", "KIX"],
+    FSZ: ["NGO", "NRT", "IBR", "KIX"],
 
-    // 간사이
-    "KIX(오사카)": [
-        "KIX(오사카)",
-        "UKB(고베)",
-        "NGO(나고야)"
-    ],
-    "UKB(고베)": [
-        "UKB(고베)",
-        "KIX(오사카)"
-    ],
+    KIX: ["UKB", "NGO", "FSZ"],
+    UKB: ["KIX"],
 
-    // 주고쿠
-    "HIJ(히로시마)": [
-        "HIJ(히로시마)",
-        "YGJ(요나고)",
-        "TAK(다카마쓰)"
-    ],
-    "YGJ(요나고)": [
-        "YGJ(요나고)",
-        "HIJ(히로시마)"
-    ],
+    HIJ: ["YGJ", "TAK"],
+    YGJ: ["HIJ"],
 
-    // 시코쿠
-    "TAK(다카마쓰)": [
-        "TAK(다카마쓰)",
-        "MYJ(마쓰야마)",
-        "TKS(도쿠시마)",
-        "HIJ(히로시마)"
-    ],
-    "MYJ(마쓰야마)": [
-        "MYJ(마쓰야마)",
-        "TAK(다카마쓰)",
-        "TKS(도쿠시마)"
-    ],
-    "TKS(도쿠시마)": [
-        "TKS(도쿠시마)",
-        "TAK(다카마쓰)",
-        "MYJ(마쓰야마)"
-    ],
+    TAK: ["MYJ", "TKS", "HIJ"],
+    MYJ: ["TAK", "TKS"],
+    TKS: ["TAK", "MYJ"],
 
-    // 큐슈 (모든 공항 상호 허용)
-    "FUK(후쿠오카)": [
-        "FUK(후쿠오카)",
-        "KKJ(기타큐슈)",
-        "HSG(사가)",
-        "KMJ(구마모토)",
-        "OIT(오이타)",
-        "KOJ(가고시마)"
-    ],
-    "KKJ(기타큐슈)": [
-        "KKJ(기타큐슈)",
-        "FUK(후쿠오카)",
-        "HSG(사가)",
-        "KMJ(구마모토)",
-        "OIT(오이타)",
-        "KOJ(가고시마)"
-    ],
-    "HSG(사가)": [
-        "HSG(사가)",
-        "FUK(후쿠오카)",
-        "KKJ(기타큐슈)",
-        "KMJ(구마모토)",
-        "OIT(오이타)",
-        "KOJ(가고시마)"
-    ],
-    "KMJ(구마모토)": [
-        "KMJ(구마모토)",
-        "FUK(후쿠오카)",
-        "KKJ(기타큐슈)",
-        "HSG(사가)",
-        "OIT(오이타)",
-        "KOJ(가고시마)"
-    ],
-    "OIT(오이타)": [
-        "OIT(오이타)",
-        "FUK(후쿠오카)",
-        "KKJ(기타큐슈)",
-        "HSG(사가)",
-        "KMJ(구마모토)",
-        "KOJ(가고시마)"
-    ],
-    "KOJ(가고시마)": [
-        "KOJ(가고시마)",
-        "FUK(후쿠오카)",
-        "KKJ(기타큐슈)",
-        "HSG(사가)",
-        "KMJ(구마모토)",
-        "OIT(오이타)"
-    ],
-
-    // 오키나와
-    "OKA(나하)": [
-        "OKA(나하)"
-    ]
+    FUK: ["KKJ", "HSG", "KMJ", "OIT", "KOJ"],
+    KKJ: ["FUK", "HSG", "KMJ", "OIT", "KOJ"],
+    HSG: ["FUK", "KKJ", "KMJ", "OIT", "KOJ"],
+    KMJ: ["FUK", "KKJ", "HSG", "OIT", "KOJ"],
+    OIT: ["FUK", "KKJ", "HSG", "KMJ", "KOJ"],
+    KOJ: ["FUK", "KKJ", "HSG", "KMJ", "OIT"]
 
 };
-const region = document.getElementById("region");
-const airport = document.getElementById("airport");
 
-function updateAirport(){
-
-    airport.innerHTML="";
-
-    airports[region.value].forEach(function(name){
-
-        const option=document.createElement("option");
-        option.textContent=name;
-        airport.appendChild(option);
-
-    });
-
-}
-
-region.addEventListener("change", function(){
-
-    updateAirport();
-
-    if(tripType.value==="오픈조"){
-    returnRegion.value = region.value;
-    updateReturnAirport();
-}
-
-});
-const tripType = document.getElementById("tripType");
-const returnAirportBox = document.getElementById("returnAirportBox");
-const returnAirport = document.getElementById("returnAirport");
-const returnRegion = document.getElementById("returnRegion");
-function updateReturnAirport(){
-
-    returnAirport.innerHTML = "";
-
-    const list = openJawMap[airport.value] || [];
-
-    list.forEach(function(name){
-
-        if(
-            returnRegion.value==="전체" ||
-            airports[returnRegion.value].includes(name)
-        ){
-
-            const option = document.createElement("option");
-            option.value = name;
-            option.textContent = name;
-            returnAirport.appendChild(option);
-
-        }
-
-    });
-
-    if(returnAirport.options.length===0){
-
-        const option=document.createElement("option");
-        option.value="";
-        option.textContent="선택 가능한 귀국공항 없음";
-        returnAirport.appendChild(option);
-
-    }
-
-}
-returnRegion.addEventListener("change", function(){
-
-    updateReturnAirport();
-
-});
-airport.addEventListener("change", function(){
-
-    if(tripType.value==="오픈조"){
-        updateReturnAirport();
-    }
-
-});
-tripType.addEventListener("change", function(){
-
-    if(tripType.value==="오픈조"){
-
-        returnAirportBox.style.display="block";
-
-        if(returnRegion.value==="전체"){
-            returnRegion.value=region.value;
-        }
-
-        updateReturnAirport();
-
-    }else{
-
-        returnAirportBox.style.display="none";
-
-    }
-
-});
-function searchFlight() {
-
-    const departure = document.getElementById("departure").value;
-    const arrival = airport.value;
-    const returnAirportValue = document.getElementById("returnAirport")?.value || arrival;
-    const depart = document.getElementById("departDate").value;
-    const ret = document.getElementById("returnDate").value;
-    const priceFilter = document.getElementById("price").value;
-    if(depart===""){
-        alert("출국일을 선택하세요.");
-        return;
-    }
-
-    if(ret===""){
-        alert("귀국일을 선택하세요.");
-        return;
-    }
-
-    if(new Date(ret) < new Date(depart)){
-        alert("귀국일은 출국일 이후여야 합니다.");
-        return;
-    }
-    const resultBox = document.getElementById("result");
-resultBox.style.display = "block";
-    const flights = [
-
-    {
-        airline: "에어로케이",
-        price: 201000,
-        time: "2시간 00분",
-        url: "https://www.aerok.com"
-    },
-
-    {
-        airline: "제주항공",
-        price: 214000,
-        time: "2시간 05분",
-        url: "https://www.jejuair.net"
-    },
-
-    {
-        airline: "진에어",
-        price: 219000,
-        time: "2시간 10분",
-        url: "https://www.jinair.com"
-    },
-
-    {
-        airline: "티웨이항공",
-        price: 226000,
-        time: "2시간 10분",
-        url: "https://www.twayair.com"
-    },
-
-    {
-        airline: "이스타항공",
-        price: 232000,
-        time: "2시간 15분",
-        url: "https://www.eastarjet.com"
-    },
-
-    {
-        airline: "에어서울",
-        price: 239000,
-        time: "2시간 10분",
-        url: "https://www.flyairseoul.com"
-    },
-
-    {
-        airline: "에어부산",
-        price: 243000,
-        time: "2시간 15분",
-        url: "https://www.airbusan.com"
-    }
-
+const AIRLINES = [
+    "제주항공",
+    "진에어",
+    "티웨이항공",
+    "에어부산",
+    "이스타항공",
+    "에어서울"
 ];
 
-    let result = flights;
+const departureSelect = document.getElementById("departure");
+const regionSelect = document.getElementById("region");
+const airportSelect = document.getElementById("airport");
+const tripTypeSelect = document.getElementById("tripType");
+const returnAirportBox = document.getElementById("returnAirportBox");
+const returnAirportSelect = document.getElementById("returnAirport");
+const departDate = document.getElementById("departDate");
+const returnDate = document.getElementById("returnDate");
+const priceSelect = document.getElementById("price");
+const resultBox = document.getElementById("results");
+const searchBtn = document.getElementById("searchBtn");
 
-    if(priceFilter==="20만원 이하"){
-        result = flights.filter(f=>f.price<=200000);
+function airportLabel(code) {
+
+    for (const region in REGIONS) {
+
+        for (const airport of REGIONS[region]) {
+
+            if (airport.code === code) {
+                return `${airport.code} (${airport.name})`;
+            }
+
+        }
+
     }
 
-    if(priceFilter==="30만원 이하"){
-        result = flights.filter(f=>f.price<=300000);
+    return code;
+}
+// =============================
+// Part 2 / 6
+// =============================
+
+function populateAirport() {
+
+    airportSelect.innerHTML = "";
+
+    if (regionSelect.value === "ALL") {
+
+        const option = document.createElement("option");
+        option.value = "ALL";
+        option.textContent = "전체";
+        airportSelect.appendChild(option);
+
+        Object.values(REGIONS).forEach(list => {
+
+            list.forEach(airport => {
+
+                const op = document.createElement("option");
+                op.value = airport.code;
+                op.textContent = airportLabel(airport.code);
+
+                airportSelect.appendChild(op);
+
+            });
+
+        });
+
+    } else {
+
+        REGIONS[regionSelect.value].forEach(airport => {
+
+            const op = document.createElement("option");
+
+            op.value = airport.code;
+            op.textContent = airportLabel(airport.code);
+
+            airportSelect.appendChild(op);
+
+        });
+
     }
 
-    let html="<h2>검색 결과</h2>";
+    populateReturnAirport();
 
-    if(result.length===0){
+}
 
-        html+="<div class='card'><h3>검색 결과가 없습니다.</h3></div>";
+function populateReturnAirport() {
 
-    }else{
+    returnAirportSelect.innerHTML = "";
 
-        result.sort((a,b)=>a.price-b.price);
+    if (tripTypeSelect.value === "round") {
 
-result.forEach((f,index)=>{
+        returnAirportBox.style.display = "none";
+        return;
 
-    html+=`
+    }
 
-<div class="card">
+    returnAirportBox.style.display = "block";
 
-${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
+    const departureAirport = airportSelect.value;
 
-<div class="airline">✈️ ${f.airline}</div>
-<p>비행시간 : ${f.time}</p>
+    if (departureAirport === "ALL") {
 
-<p>여정 : ${tripType.value==="왕복" ? "왕복" : "오픈조"}</p>
+        const option = document.createElement("option");
 
-<p>출발 : ${departure}</p>
+        option.value = "ALL";
+        option.textContent = "자동 선택";
 
-<p>도착 : ${arrival}</p>
+        returnAirportSelect.appendChild(option);
 
-<p>귀국 : ${returnAirportValue}</p>
+        return;
 
-<p>일정 : ${depart} ~ ${ret}</p>
+    }
 
-<div class="price">
-    실제 결제금액 : ${f.price.toLocaleString()}원
-</div>
-<div class="booking">
-    <a href="${f.url}" target="_blank">
-        공식 홈페이지 예약
-    </a>
-</div>
+    const available = OPEN_JAW[departureAirport] || [];
 
-</div>
+    if (available.length === 0) {
 
-`;
+        const option = document.createElement("option");
+
+        option.textContent = "오픈조 없음";
+        option.value = departureAirport;
+
+        returnAirportSelect.appendChild(option);
+
+        return;
+
+    }
+
+    available.forEach(code => {
+
+        const option = document.createElement("option");
+
+        option.value = code;
+        option.textContent = airportLabel(code);
+
+        returnAirportSelect.appendChild(option);
+
+    });
+
+}
+
+regionSelect.addEventListener("change", populateAirport);
+
+airportSelect.addEventListener("change", populateReturnAirport);
+
+tripTypeSelect.addEventListener("change", populateReturnAirport);
+// =============================
+// Part 3 / 6
+// =============================
+
+function randomPrice() {
+
+    return Math.floor(Math.random() * 180000) + 120000;
+
+}
+
+function randomTime() {
+
+    return (Math.random() * 2 + 1.5).toFixed(1);
+
+}
+
+function createResult(destination, isOpenJaw = false, returnAirport = null) {
+
+    return {
+
+        airline: AIRLINES[Math.floor(Math.random() * AIRLINES.length)],
+
+        departure: departureSelect.value,
+
+        arrival: destination,
+
+        returnAirport: returnAirport ?? destination,
+
+        type: isOpenJaw ? "오픈조" : "왕복",
+
+        time: randomTime(),
+
+        price: randomPrice()
+
+    };
+
+}
+
+function searchFlights() {
+
+    if (!departDate.value || !returnDate.value) {
+
+        alert("출발일과 귀국일을 선택하세요.");
+
+        return;
+
+    }
+
+    if (departDate.value > returnDate.value) {
+
+        alert("귀국일은 출발일 이후여야 합니다.");
+
+        return;
+
+    }
+
+    let results = [];
+
+    const destination = airportSelect.value;
+
+    if (destination === "ALL") {
+
+        Object.values(REGIONS).forEach(region => {
+
+            region.forEach(airport => {
+
+                results.push(createResult(airport.code));
+
+                if (tripTypeSelect.value === "openjaw") {
+
+                    (OPEN_JAW[airport.code] || []).forEach(open => {
+
+                        results.push(createResult(airport.code, true, open));
+
+                    });
+
+                }
+
+            });
+
+        });
+
+    } else {
+
+        results.push(createResult(destination));
+
+        if (tripTypeSelect.value === "openjaw") {
+
+            (OPEN_JAW[destination] || []).forEach(open => {
+
+                results.push(createResult(destination, true, open));
+
+            });
+
+        }
+
+    }
+
+    const limit = Number(priceSelect.value);
+
+    results = results.filter(item => item.price <= limit);
+
+    results.sort((a, b) => a.price - b.price);
+
+    renderResults(results);
+
+}
+// =============================
+// Part 4 / 6
+// =============================
+
+function renderResults(results) {
+
+    resultBox.innerHTML = "";
+
+    if (results.length === 0) {
+
+        resultBox.innerHTML = `
+            <div class="empty">
+                검색 결과가 없습니다.
+            </div>
+        `;
+
+        return;
+    }
+
+    results.forEach(item => {
+
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        card.innerHTML = `
+
+            <div class="card-top">
+
+                <div>
+
+                    <div class="airline">
+                        ${item.airline}
+                    </div>
+
+                    <span class="badge">
+                        ${item.type}
+                    </span>
+
+                </div>
+
+                <div class="price">
+                    ${item.price.toLocaleString()}원
+                </div>
+
+            </div>
+
+            <div class="route">
+
+                ${item.departure}
+                →
+                ${item.arrival}
+
+                ${item.type === "오픈조"
+                    ? ` / ${item.returnAirport} → ${item.departure}`
+                    : ` / ${item.arrival} → ${item.departure}`}
+
+            </div>
+
+            <div class="info">
+
+                비행시간 : 약 ${item.time}시간<br>
+
+                실제 결제금액 기준<br>
+
+                국내 LCC
+
+            </div>
+
+        `;
+
+        resultBox.appendChild(card);
+
+    });
+
+}
+
+searchBtn.addEventListener("click", searchFlights);
+// =============================
+// Part 5 / 6
+// =============================
+
+function initialize() {
+
+    // 기본값
+    regionSelect.value = "ALL";
+
+    populateAirport();
+
+    if (tripTypeSelect.value === "openjaw") {
+        returnAirportBox.style.display = "block";
+        populateReturnAirport();
+    } else {
+        returnAirportBox.style.display = "none";
+    }
+
+}
+
+function setToday() {
+
+    const today = new Date();
+
+    const yyyy = today.getFullYear();
+
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+
+    const dd = String(today.getDate()).padStart(2, "0");
+
+    const start = `${yyyy}-${mm}-${dd}`;
+
+    departDate.min = start;
+    returnDate.min = start;
+
+}
+
+departDate.addEventListener("change", () => {
+
+    returnDate.min = departDate.value;
+
+    if (returnDate.value && returnDate.value < departDate.value) {
+        returnDate.value = "";
+    }
 
 });
-    }
 
-    resultBox.style.display = "block";
-resultBox.innerHTML = html;
+initialize();
 
-}
-updateAirport();
-
-if(tripType.value==="오픈조"){
-    updateReturnAirport();
-}
+setToday();
