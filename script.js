@@ -1,42 +1,107 @@
 const airports = {
-    "간사이": [
-        "오사카(KIX)",
-        "고베(UKB)"
+    "전체": [
+        "CTS(삿포로)",
+        "NRT(도쿄)",
+        "IBR(이바라키)",
+        "NGO(나고야)",
+        "FSZ(시즈오카)",
+        "KIX(오사카)",
+        "UKB(고베)",
+        "HIJ(히로시마)",
+        "YGJ(요나고)",
+        "TAK(다카마쓰)",
+        "MYJ(마쓰야마)",
+        "TKS(도쿠시마)",
+        "FUK(후쿠오카)",
+        "KKJ(기타큐슈)",
+        "HSG(사가)",
+        "KMJ(구마모토)",
+        "OIT(오이타)",
+        "KOJ(가고시마)",
+        "OKA(나하)"
     ],
-    "간토": [
-        "도쿄(나리타 NRT)",
-        "도쿄(하네다 HND)"
-    ],
-    "주부": [
-        "나고야(NGO)"
-    ],
+
     "홋카이도": [
-        "삿포로(CTS)"
+        "CTS(삿포로)"
     ],
+
+    "간토": [
+        "NRT(도쿄)",
+        "IBR(이바라키)"
+    ],
+
+    "주부": [
+        "NGO(나고야)",
+        "FSZ(시즈오카)"
+    ],
+
+    "간사이": [
+        "KIX(오사카)",
+        "UKB(고베)"
+    ],
+
     "주고쿠": [
-        "히로시마(HIJ)"
+        "HIJ(히로시마)",
+        "YGJ(요나고)"
     ],
+
     "시코쿠": [
-        "다카마쓰(TAK)",
-        "마쓰야마(MYJ)"
+        "TAK(다카마쓰)",
+        "MYJ(마쓰야마)",
+        "TKS(도쿠시마)"
     ],
+
     "큐슈": [
-        "후쿠오카(FUK)",
-        "기타큐슈(KKJ)",
-        "가고시마(KOJ)",
-        "미야자키(KMI)",
-        "오이타(OIT)",
-        "구마모토(KMJ)",
-        "나가사키(NGS)"
+        "FUK(후쿠오카)",
+        "KKJ(기타큐슈)",
+        "HSG(사가)",
+        "KMJ(구마모토)",
+        "OIT(오이타)",
+        "KOJ(가고시마)"
     ],
+
     "오키나와": [
-        "나하(OKA)"
+        "OKA(나하)"
     ]
 };
 const openJawMap = {
 
-};
+    // 간토
+    "NRT(도쿄)": ["NRT(도쿄)", "IBR(이바라키)"],
+    "IBR(이바라키)": ["IBR(이바라키)", "NRT(도쿄)"],
 
+    // 주부
+    "NGO(나고야)": ["NGO(나고야)", "FSZ(시즈오카)", "KIX(오사카)"],
+    "FSZ(시즈오카)": ["FSZ(시즈오카)", "NGO(나고야)", "NRT(도쿄)", "IBR(이바라키)", "KIX(오사카)"],
+
+    // 간사이
+    "KIX(오사카)": ["KIX(오사카)", "UKB(고베)", "NGO(나고야)", "FSZ(시즈오카)"],
+    "UKB(고베)": ["UKB(고베)", "KIX(오사카)"],
+
+    // 주고쿠
+    "HIJ(히로시마)": ["HIJ(히로시마)", "YGJ(요나고)", "TAK(다카마쓰)"],
+    "YGJ(요나고)": ["YGJ(요나고)", "HIJ(히로시마)"],
+
+    // 시코쿠
+    "TAK(다카마쓰)": ["TAK(다카마쓰)", "MYJ(마쓰야마)", "TKS(도쿠시마)", "HIJ(히로시마)"],
+    "MYJ(마쓰야마)": ["MYJ(마쓰야마)", "TAK(다카마쓰)", "TKS(도쿠시마)"],
+    "TKS(도쿠시마)": ["TKS(도쿠시마)", "TAK(다카마쓰)", "MYJ(마쓰야마)"],
+
+    // 큐슈
+    "FUK(후쿠오카)": ["FUK(후쿠오카)", "KKJ(기타큐슈)", "HSG(사가)", "KMJ(구마모토)", "OIT(오이타)", "KOJ(가고시마)"],
+    "KKJ(기타큐슈)": ["KKJ(기타큐슈)", "FUK(후쿠오카)", "HSG(사가)", "KMJ(구마모토)", "OIT(오이타)", "KOJ(가고시마)"],
+    "HSG(사가)": ["HSG(사가)", "FUK(후쿠오카)", "KKJ(기타큐슈)", "KMJ(구마모토)", "OIT(오이타)", "KOJ(가고시마)"],
+    "KMJ(구마모토)": ["KMJ(구마모토)", "FUK(후쿠오카)", "KKJ(기타큐슈)", "HSG(사가)", "OIT(오이타)", "KOJ(가고시마)"],
+    "OIT(오이타)": ["OIT(오이타)", "FUK(후쿠오카)", "KKJ(기타큐슈)", "HSG(사가)", "KMJ(구마모토)", "KOJ(가고시마)"],
+    "KOJ(가고시마)": ["KOJ(가고시마)", "FUK(후쿠오카)", "KKJ(기타큐슈)", "HSG(사가)", "KMJ(구마모토)", "OIT(오이타)"],
+
+    // 홋카이도
+    "CTS(삿포로)": ["CTS(삿포로)"],
+
+    // 오키나와
+    "OKA(나하)": ["OKA(나하)"]
+
+};
 const region = document.getElementById("region");
 const airport = document.getElementById("airport");
 
@@ -54,8 +119,21 @@ function updateAirport(){
 
 }
 
-region.addEventListener("change",updateAirport);
+region.addEventListener("change", function(){
 
+    updateAirport();
+airport.addEventListener("change", function(){
+
+    if(tripType.value==="오픈조"){
+        updateReturnAirport();
+    }
+
+});
+    if(tripType.value==="오픈조"){
+        updateReturnAirport();
+    }
+
+});
 updateAirport();
 const tripType = document.getElementById("tripType");
 const returnAirportBox = document.getElementById("returnAirportBox");
@@ -112,31 +190,56 @@ function searchFlight() {
         return;
     }
     const flights = [
+
     {
-        airline:"진에어",
-        price:179000,
-        url:"https://www.jinair.com"
+        airline: "에어로케이",
+        price: 201000,
+        time: "2시간 00분",
+        url: "https://www.aerok.com"
     },
+
     {
-        airline:"에어서울",
-        price:184000,
-        url:"https://flyairseoul.com"
+        airline: "제주항공",
+        price: 214000,
+        time: "2시간 05분",
+        url: "https://www.jejuair.net"
     },
+
     {
-        airline:"티웨이항공",
-        price:193000,
-        url:"https://www.twayair.com"
+        airline: "진에어",
+        price: 219000,
+        time: "2시간 10분",
+        url: "https://www.jinair.com"
     },
+
     {
-        airline:"제주항공",
-        price:214000,
-        url:"https://www.jejuair.net"
+        airline: "티웨이항공",
+        price: 226000,
+        time: "2시간 10분",
+        url: "https://www.twayair.com"
     },
+
     {
-    airline:"에어로케이",
-    price:201000,
-    url:"https://www.aerok.com"
-    }    
+        airline: "이스타항공",
+        price: 232000,
+        time: "2시간 15분",
+        url: "https://www.eastarjet.com"
+    },
+
+    {
+        airline: "에어서울",
+        price: 239000,
+        time: "2시간 10분",
+        url: "https://www.flyairseoul.com"
+    },
+
+    {
+        airline: "에어부산",
+        price: 243000,
+        time: "2시간 15분",
+        url: "https://www.airbusan.com"
+    }
+
 ];
 
     let result = flights;
@@ -169,15 +272,19 @@ ${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
 
 <div class="airline">✈️ ${f.airline}</div>
 
+<p>여정 : ${tripType.value==="왕복" ? "왕복" : "오픈조"}</p>
+
 <p>출발 : ${departure}</p>
 
 <p>도착 : ${arrival}</p>
 
 <p>귀국 : ${returnAirportValue}</p>
 
-<p>${depart} ~ ${ret}</p>
+<p>일정 : ${depart} ~ ${ret}</p>
 
-<div class="price">${f.price.toLocaleString()}원</div>
+<div class="price">
+    실제 결제금액 : ${f.price.toLocaleString()}원
+</div>
 
 <div class="booking">
     <a href="${f.url}" target="_blank">
