@@ -55,56 +55,63 @@ region.addEventListener("change",updateAirport);
 
 updateAirport();
 
-function searchFlight(){
+function searchFlight() {
 
-    const departure=document.getElementById("departure").value;
-    const arrival=airport.value;
-    const depart=document.getElementById("departDate").value;
-    const ret=document.getElementById("returnDate").value;
-    const price=document.getElementById("price").value;
+    const departure = document.getElementById("departure").value;
+    const arrival = airport.value;
+    const depart = document.getElementById("departDate").value;
+    const ret = document.getElementById("returnDate").value;
+    const priceFilter = document.getElementById("price").value;
 
-    document.getElementById("result").style.display="block";
+    const flights = [
+        { airline:"진에어", price:179000 },
+        { airline:"에어서울", price:184000 },
+        { airline:"티웨이항공", price:193000 },
+        { airline:"제주항공", price:214000 },
+        { airline:"대한항공", price:347000 }
+    ];
 
-    document.getElementById("result").innerHTML=`
+    let result = flights;
 
-<h2>검색 결과</h2>
+    if(priceFilter==="20만원 이하"){
+        result = flights.filter(f=>f.price<=200000);
+    }
+
+    if(priceFilter==="30만원 이하"){
+        result = flights.filter(f=>f.price<=300000);
+    }
+
+    let html="<h2>검색 결과</h2>";
+
+    if(result.length===0){
+
+        html+="<div class='card'><h3>검색 결과가 없습니다.</h3></div>";
+
+    }else{
+
+        result.forEach(f=>{
+
+            html+=`
 
 <div class="card">
 
-<h3>진에어</h3>
+<h3>${f.airline}</h3>
 
 <p>${departure} → ${arrival}</p>
 
 <p>${depart} ~ ${ret}</p>
 
-<p class="price">179,000원</p>
-
-</div>
-
-<div class="card">
-
-<h3>에어서울</h3>
-
-<p>${departure} → ${arrival}</p>
-
-<p>${depart} ~ ${ret}</p>
-
-<p class="price">184,000원</p>
-
-</div>
-
-<div class="card">
-
-<h3>티웨이항공</h3>
-
-<p>${departure} → ${arrival}</p>
-
-<p>${depart} ~ ${ret}</p>
-
-<p class="price">193,000원</p>
+<p class="price">${f.price.toLocaleString()}원</p>
 
 </div>
 
 `;
+
+        });
+
+    }
+
+    document.getElementById("result").style.display="block";
+    document.getElementById("result").innerHTML=html;
 
 }
