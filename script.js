@@ -138,12 +138,12 @@ updateAirport();
 const tripType = document.getElementById("tripType");
 const returnAirportBox = document.getElementById("returnAirportBox");
 const returnAirport = document.getElementById("returnAirport");
-
+const returnRegion = document.getElementById("returnRegion");
 function updateReturnAirport(){
 
     returnAirport.innerHTML = "";
 
-    airports[region.value].forEach(function(name){
+    airports[returnRegion.value].forEach(function(name){
 
         const option = document.createElement("option");
         option.textContent = name;
@@ -154,7 +154,9 @@ function updateReturnAirport(){
 }
 
 tripType.addEventListener("change", function(){
-
+returnRegion.addEventListener("change", function () {
+    updateReturnAirport();
+});
     if(tripType.value==="오픈조"){
 
         returnAirportBox.style.display="block";
