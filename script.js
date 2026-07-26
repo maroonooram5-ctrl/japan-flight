@@ -54,11 +54,43 @@ function updateAirport(){
 region.addEventListener("change",updateAirport);
 
 updateAirport();
+const tripType = document.getElementById("tripType");
+const returnAirportBox = document.getElementById("returnAirportBox");
+const returnAirport = document.getElementById("returnAirport");
 
+function updateReturnAirport(){
+
+    returnAirport.innerHTML = "";
+
+    airports[region.value].forEach(function(name){
+
+        const option = document.createElement("option");
+        option.textContent = name;
+        returnAirport.appendChild(option);
+
+    });
+
+}
+
+tripType.addEventListener("change", function(){
+
+    if(tripType.value==="오픈조"){
+
+        returnAirportBox.style.display="block";
+        updateReturnAirport();
+
+    }else{
+
+        returnAirportBox.style.display="none";
+
+    }
+
+});
 function searchFlight() {
 
     const departure = document.getElementById("departure").value;
     const arrival = airport.value;
+    const returnAirportValue = document.getElementById("returnAirport")?.value || arrival;
     const depart = document.getElementById("departDate").value;
     const ret = document.getElementById("returnDate").value;
     const priceFilter = document.getElementById("price").value;
@@ -110,7 +142,11 @@ function searchFlight() {
 
 <h3>${f.airline}</h3>
 
-<p>${departure} → ${arrival}</p>
+<p>출발 : ${departure}</p>
+
+<p>도착 : ${arrival}</p>
+
+<p>귀국 : ${returnAirportValue}</p>
 
 <p>${depart} ~ ${ret}</p>
 
