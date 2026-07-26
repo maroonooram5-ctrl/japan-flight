@@ -134,10 +134,10 @@ function searchFlight() {
         url:"https://www.jejuair.net"
     },
     {
-        airline:"대한항공",
-        price:347000,
-        url:"https://www.koreanair.com"
-    }
+    airline:"에어로케이",
+    price:201000,
+    url:"https://www.aerok.com"
+    }    
 ];
 
     let result = flights;
