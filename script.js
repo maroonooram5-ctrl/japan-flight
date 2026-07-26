@@ -62,7 +62,20 @@ function searchFlight() {
     const depart = document.getElementById("departDate").value;
     const ret = document.getElementById("returnDate").value;
     const priceFilter = document.getElementById("price").value;
+    if(depart===""){
+        alert("출국일을 선택하세요.");
+        return;
+    }
 
+    if(ret===""){
+        alert("귀국일을 선택하세요.");
+        return;
+    }
+
+    if(new Date(ret) < new Date(depart)){
+        alert("귀국일은 출국일 이후여야 합니다.");
+        return;
+    }
     const flights = [
         { airline:"진에어", price:179000 },
         { airline:"에어서울", price:184000 },
