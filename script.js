@@ -129,8 +129,6 @@ region.addEventListener("change", function(){
 }
 
 });
-updateAirport();
-updateReturnAirport();
 const tripType = document.getElementById("tripType");
 const returnAirportBox = document.getElementById("returnAirportBox");
 const returnAirport = document.getElementById("returnAirport");
@@ -309,3 +307,5 @@ ${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
     document.getElementById("result").innerHTML=html;
 
 }
+updateAirport();
+updateReturnAirport();
