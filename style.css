@@ -134,3 +134,28 @@ h1{
 .search-section{
     background:#fff;
 }
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:18px;
+    margin-top:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    border:1px solid #e5e7eb;
+}
+
+.card h3{
+    margin:0 0 10px;
+    font-size:20px;
+}
+
+.card p{
+    margin:6px 0;
+    color:#555;
+}
+
+.price{
+    margin-top:12px;
+    font-size:28px;
+    font-weight:700;
+    color:#0078ff;
+}
