@@ -304,8 +304,8 @@ function searchFlight() {
         alert("귀국일은 출국일 이후여야 합니다.");
         return;
     }
-    const result = document.getElementById("result");
-result.style.display = "block";
+    const resultBox = document.getElementById("result");
+resultBox.style.display = "block";
     const flights = [
 
     {
@@ -416,8 +416,8 @@ ${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
 });
     }
 
-    document.getElementById("result").style.display="block";
-    document.getElementById("result").innerHTML=html;
+    resultBox.style.display = "block";
+resultBox.innerHTML = html;
 
 }
 updateAirport();
