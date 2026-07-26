@@ -227,15 +227,28 @@ function updateReturnAirport(){
 
     list.forEach(function(name){
 
-        if(returnRegion.value==="전체" || airports[returnRegion.value].includes(name)){
+        if(
+            returnRegion.value==="전체" ||
+            airports[returnRegion.value].includes(name)
+        ){
 
             const option = document.createElement("option");
+            option.value = name;
             option.textContent = name;
             returnAirport.appendChild(option);
 
         }
 
     });
+
+    if(returnAirport.options.length===0){
+
+        const option=document.createElement("option");
+        option.value="";
+        option.textContent="선택 가능한 귀국공항 없음";
+        returnAirport.appendChild(option);
+
+    }
 
 }
 returnRegion.addEventListener("change", function(){
@@ -254,15 +267,19 @@ tripType.addEventListener("change", function(){
 
     if(tripType.value==="오픈조"){
 
-    returnAirportBox.style.display="block";
-    returnRegion.value = region.value;
-    updateReturnAirport();
+        returnAirportBox.style.display="block";
 
-}else{
+        if(returnRegion.value==="전체"){
+            returnRegion.value=region.value;
+        }
 
-    returnAirportBox.style.display="none";
+        updateReturnAirport();
 
-}
+    }else{
+
+        returnAirportBox.style.display="none";
+
+    }
 
 });
 function searchFlight() {
@@ -385,9 +402,6 @@ ${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
 
 <div class="price">
     실제 결제금액 : ${f.price.toLocaleString()}원
-</div>
-<div class="booking">
-    <a href="${f.url}" target="_blank">예약하러 가기</a>
 </div>
 <div class="booking">
     <a href="${f.url}" target="_blank">
