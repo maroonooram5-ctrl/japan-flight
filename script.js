@@ -495,30 +495,3 @@ departDate.addEventListener("change", () => {
 initialize();
 
 setToday();
-// =============================
-// Part 6 / 6
-// =============================
-
-// 가격 기본값
-if (priceSelect.value === "") {
-    priceSelect.value = "300000";
-}
-
-// 왕복/오픈조 변경 시 귀국공항 갱신
-tripTypeSelect.addEventListener("change", () => {
-    populateReturnAirport();
-});
-
-// 지역 변경 시 도착공항 갱신
-regionSelect.addEventListener("change", () => {
-    populateAirport();
-});
-
-// 도착공항 변경 시 귀국공항 갱신
-airportSelect.addEventListener("change", () => {
-    populateReturnAirport();
-});
-
-// 페이지 최초 로딩
-populateAirport();
-populateReturnAirport();
