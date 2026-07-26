@@ -77,3 +77,45 @@ button{
     margin-bottom:22px;
     box-shadow:0 2px 8px rgba(0,0,0,0.05);
 }
+.search-section{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+
+label{
+    display:block;
+    font-weight:600;
+    margin-top:12px;
+    margin-bottom:6px;
+}
+
+select,
+input[type="date"]{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:16px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:16px;
+    margin-top:20px;
+    font-size:18px;
+    font-weight:bold;
+    border:none;
+    border-radius:12px;
+    background:#0078ff;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0066d6;
+}
