@@ -137,11 +137,17 @@ function updateReturnAirport(){
 
     returnAirport.innerHTML = "";
 
-    airports[returnRegion.value].forEach(function(name){
+    const list = openJawMap[airport.value] || [];
 
-        const option = document.createElement("option");
-        option.textContent = name;
-        returnAirport.appendChild(option);
+    list.forEach(function(name){
+
+        if(returnRegion.value==="전체" || airports[returnRegion.value].includes(name)){
+
+            const option = document.createElement("option");
+            option.textContent = name;
+            returnAirport.appendChild(option);
+
+        }
 
     });
 
