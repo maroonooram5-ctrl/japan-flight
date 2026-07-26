@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>최저 일본 항공권</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#f4f6fb;
+    font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+}
+
+.container{
+    max-width:430px;
+    margin:auto;
+    padding:20px;
+}
+
+h1{
+    text-align:center;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+select,input,button{
+    width:100%;
+    padding:14px;
+    margin-top:12px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    box-sizing:border-box;
+    font-size:16px;
+}
+
+button{
+    background:#1976d2;
+    color:white;
+    border:none;
+}
+
+.result{
+    margin-top:20px;
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    display:none;
+}
+
+.price{
+    font-size:28px;
+    color:#1976d2;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🇯🇵 최저 일본 항공권</h1>
+
+<div class="card">
+
+<select>
+<option>출발공항</option>
+<option>인천(ICN)</option>
+<option>김포(GMP)</option>
+<option>청주(CJJ)</option>
+<option>대구(TAE)</option>
+<option>부산(PUS)</option>
+</select>
+
+<select>
+<option>도착지역</option>
+<option>간사이</option>
+<option>간토</option>
+<option>주부</option>
+<option>홋카이도</option>
+<option>주고쿠</option>
+<option>시코쿠</option>
+<option>큐슈</option>
+<option>오키나와</option>
+</select>
+
+<input type="date">
+
+<input type="date">
+
+<button onclick="searchFlight()">
+최저가 검색
+</button>
+
+</div>
+
+<div class="result" id="result">
+
+<h2>검색 결과</h2>
+
+<p><b>진에어</b></p>
+
+<p>인천(ICN) → 오사카(KIX)</p>
+
+<div class="price">179,000원</div>
+
+</div>
+
+</div>
+
+<script>
+
+function searchFlight(){
+
+document.getElementById("result").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
