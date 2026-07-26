@@ -110,13 +110,13 @@
 </div>
 
 <div class="card">
-
-<h3>에어서울</h3>
-
-<p>인천(ICN) → 오사카(KIX)</p>
-
-<p class="price">184,000원</p>
-
+    <div class="airline">✈️ 진에어</div>
+    <div class="route">인천(ICN) → 후쿠오카(FUK)</div>
+    <div class="date">2026.09.10 ~ 2026.09.13</div>
+    <div class="price">₩129,000</div>
+    <div class="booking">
+        <a href="#" target="_blank">예약하러 가기</a>
+    </div>
 </div>
 
 <div class="card">
@@ -136,3 +136,43 @@
 </body>
 
 </html>
+.airline{
+    font-size:20px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:8px;
+}
+
+.route{
+    font-size:17px;
+    color:#374151;
+    margin-bottom:6px;
+}
+
+.date{
+    font-size:15px;
+    color:#6b7280;
+    margin-bottom:16px;
+}
+
+.price{
+    font-size:32px;
+    font-weight:800;
+    color:#2563eb;
+    margin-bottom:16px;
+}
+
+.booking a{
+    display:inline-block;
+    background:#2563eb;
+    color:#fff;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:600;
+    transition:.2s;
+}
+
+.booking a:hover{
+    background:#1d4ed8;
+}
