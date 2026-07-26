@@ -23,6 +23,7 @@ const airports = {
     ],
     "큐슈": [
         "후쿠오카(FUK)",
+        "기타큐슈(KKJ)",
         "가고시마(KOJ)",
         "미야자키(KMI)",
         "오이타(OIT)",
@@ -32,6 +33,9 @@ const airports = {
     "오키나와": [
         "나하(OKA)"
     ]
+};
+const openJawMap = {
+
 };
 
 const region = document.getElementById("region");
