@@ -52,3 +52,20 @@ button{
     font-weight:bold;
     color:#1976d2;
 }
+
+
+.section-title{
+    margin-top:30px;
+    margin-bottom:15px;
+    font-size:22px;
+    font-weight:bold;
+    color:#333;
+    border-bottom:2px solid #e5e5e5;
+    padding-bottom:8px;
+}
+
+.sub-item{
+    margin-left:24px;
+    padding-left:16px;
+    border-left:3px solid #e5e5e5;
+}
