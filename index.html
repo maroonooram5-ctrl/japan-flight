@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>최저가 일본 항공권</title>
-
+<title>최저 일본 항공권</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -13,42 +11,96 @@
 
 <div class="container">
 
-<h1>🇯🇵 최저가 일본 항공권</h1>
+<h1>🇯🇵 최저 일본 항공권</h1>
 
 <div class="card">
 
-<select id="region">
-    <option>간사이</option>
-    <option>간토</option>
-    <option>주부</option>
-    <option>홋카이도</option>
-    <option>주고쿠</option>
-    <option>시코쿠</option>
-    <option>큐슈</option>
-    <option>오키나와</option>
+<label>출발공항</label>
+
+<select id="departure">
+<option>전체</option>
+<option>인천(ICN)</option>
+<option>김포(GMP)</option>
+<option>청주(CJJ)</option>
+<option>대구(TAE)</option>
+<option>부산(PUS)</option>
 </select>
+
+<label>도착지역</label>
+
+<select id="region">
+<option>간사이</option>
+<option>간토</option>
+<option>주부</option>
+<option>홋카이도</option>
+<option>주고쿠</option>
+<option>시코쿠</option>
+<option>큐슈</option>
+<option>오키나와</option>
+</select>
+
+<label>도착공항</label>
 
 <select id="airport"></select>
 
-<input type="date">
+<label>여행형태</label>
 
-<input type="date">
+<select id="tripType">
+<option>왕복</option>
+<option>오픈조</option>
+</select>
+
+<label>출국일</label>
+
+<input type="date" id="departDate">
+
+<label>귀국일</label>
+
+<input type="date" id="returnDate">
+
+<label>가격</label>
+
+<select id="price">
+<option>30만원 이하</option>
+<option>20만원 이하</option>
+<option>전체</option>
+</select>
 
 <button onclick="searchFlight()">
 최저가 검색
 </button>
 
-</div>
-
-<div class="result" id="result">
+</div><div class="result" id="result" style="display:none">
 
 <h2>검색 결과</h2>
 
-<p><b>진에어</b></p>
+<div class="card">
+
+<h3>진에어</h3>
 
 <p>인천(ICN) → 오사카(KIX)</p>
 
-<div class="price">179,000원</div>
+<p class="price">179,000원</p>
+
+</div>
+
+<div class="card">
+
+<h3>에어서울</h3>
+
+<p>인천(ICN) → 오사카(KIX)</p>
+
+<p class="price">184,000원</p>
+
+</div>
+
+<div class="card">
+
+<h3>티웨이</h3>
+
+<p>인천(ICN) → 오사카(KIX)</p>
+
+<p class="price">193,000원</p>
 
 </div>
 
@@ -56,5 +108,8 @@
 
 <script src="script.js"></script>
 
+</div>
+
 </body>
+
 </html>
