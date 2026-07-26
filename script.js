@@ -122,16 +122,11 @@ function updateAirport(){
 region.addEventListener("change", function(){
 
     updateAirport();
-airport.addEventListener("change", function(){
 
     if(tripType.value==="오픈조"){
-        updateReturnAirport();
-    }
-
-});
-    if(tripType.value==="오픈조"){
-        updateReturnAirport();
-    }
+    returnRegion.value = region.value;
+    updateReturnAirport();
+}
 
 });
 updateAirport();
@@ -159,9 +154,7 @@ returnRegion.addEventListener("change", function(){
 
 });
 tripType.addEventListener("change", function(){
-returnRegion.addEventListener("change", function () {
-    updateReturnAirport();
-});
+
     if(tripType.value==="오픈조"){
 
     returnAirportBox.style.display="block";
