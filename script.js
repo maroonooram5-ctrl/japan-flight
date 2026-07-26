@@ -135,6 +135,7 @@ airport.addEventListener("change", function(){
 
 });
 updateAirport();
+updateReturnAirport();
 const tripType = document.getElementById("tripType");
 const returnAirportBox = document.getElementById("returnAirportBox");
 const returnAirport = document.getElementById("returnAirport");
@@ -159,14 +160,15 @@ returnRegion.addEventListener("change", function () {
 });
     if(tripType.value==="오픈조"){
 
-        returnAirportBox.style.display="block";
-        updateReturnAirport();
+    returnAirportBox.style.display="block";
+    returnRegion.value = region.value;
+    updateReturnAirport();
 
-    }else{
+}else{
 
-        returnAirportBox.style.display="none";
+    returnAirportBox.style.display="none";
 
-    }
+}
 
 });
 function searchFlight() {
