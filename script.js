@@ -189,6 +189,8 @@ function searchFlight() {
         alert("귀국일은 출국일 이후여야 합니다.");
         return;
     }
+    const result = document.getElementById("result");
+result.style.display = "block";
     const flights = [
 
     {
