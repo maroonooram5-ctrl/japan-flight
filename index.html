@@ -1,120 +1,108 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>최저 일본 항공권</title>
-<link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일본 최저 항공권 검색</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>🇯🇵 최저 일본 항공권</h1>
+    <header>
+        <h1>🇯🇵 일본 최저 항공권 검색</h1>
+        <p>국내 LCC 특가를 한 번에 검색</p>
+    </header>
 
-<div class="search-section">
-  <h3 class="section-title">✈️ 출발</h3>
-<div class="sub-item">
-<label>↳ 출발공항</label>
+    <section class="search-box">
 
-<select id="departure">
-<option>전체</option>
-<option>인천(ICN)</option>
-<option>김포(GMP)</option>
-<option>청주(CJJ)</option>
-<option>대구(TAE)</option>
-<option>부산(PUS)</option>
-</select>
-</div>
-</div>
-<div class="search-section">
-<h3 class="section-title">📍 도착</h3>
-<label>도착지역</label>
+        <div class="field">
+            <label>출발 공항</label>
 
-<select id="region">
-    <option>전체</option>
-    <option>홋카이도</option>
-    <option>간토</option>
-    <option>주부</option>
-    <option>간사이</option>
-    <option>주고쿠</option>
-    <option>시코쿠</option>
-    <option>큐슈</option>
-    <option>오키나와</option>
-</select>
+            <select id="departure">
+                <option value="ALL">전체</option>
+                <option value="ICN">ICN(인천)</option>
+                <option value="GMP">GMP(김포)</option>
+                <option value="CJJ">CJJ(청주)</option>
+                <option value="TAE">TAE(대구)</option>
+                <option value="PUS">PUS(부산)</option>
+            </select>
+        </div>
 
-<div class="sub-item">
-<label>↳ 도착공항</label>
+        <div class="field">
+            <label>도착 지역</label>
 
-<select id="airport"></select>
-  </div>
-  </div>
-<div class="search-section">
+            <select id="region">
+                <option value="ALL">일본 전체</option>
+                <option value="홋카이도">홋카이도</option>
+                <option value="간토">간토</option>
+                <option value="주부">주부</option>
+                <option value="간사이">간사이</option>
+                <option value="주고쿠">주고쿠</option>
+                <option value="시코쿠">시코쿠</option>
+                <option value="큐슈">큐슈</option>
+                <option value="오키나와">오키나와</option>
+            </select>
+        </div>
 
-<h3 class="section-title">🧳 여행</h3>
+        <div class="field">
+            <label>도착 공항</label>
 
-<div class="sub-item">
+            <select id="airport"></select>
+        </div>
 
-<label>↳ 여행형태</label>
+        <div class="field">
+            <label>검색 방식</label>
 
-<select id="tripType">
-    <option>왕복</option>
-    <option>오픈조</option>
-</select>
+            <select id="tripType">
+                <option value="round">왕복만</option>
+                <option value="openjaw" selected>왕복 + 오픈조</option>
+            </select>
+        </div>
 
-<label>출국일</label>
-<input type="date" id="departDate">
+        <div id="returnAirportBox">
 
-<div id="returnAirportBox" style="display:none;">
+            <div class="field">
+                <label>귀국 공항(오픈조)</label>
 
-<label>귀국지역</label>
-<select id="returnRegion">
-    <option>전체</option>
-    <option>홋카이도</option>
-    <option>간토</option>
-    <option>주부</option>
-    <option>간사이</option>
-    <option>주고쿠</option>
-    <option>시코쿠</option>
-    <option>큐슈</option>
-    <option>오키나와</option>
-</select>
+                <select id="returnAirport"></select>
+            </div>
 
-<label>귀국공항</label>
-<select id="returnAirport"></select>
+        </div>
 
-</div>
+        <div class="field">
+            <label>출발일</label>
+            <input type="date" id="departDate">
+        </div>
 
-<label>귀국일</label>
-<input type="date" id="returnDate">
+        <div class="field">
+            <label>귀국일</label>
+            <input type="date" id="returnDate">
+        </div>
 
-</div>
+        <div class="field">
+            <label>가격</label>
 
-</div>
-<div class="search-section">
-<h3 class="section-title">💰 가격</h3>
-<div class="sub-item">
-<label>↳ 최대요금</label>
+            <select id="price">
+                <option value="999999">전체</option>
+                <option value="200000">20만원 이하</option>
+                <option value="300000" selected>30만원 이하</option>
+            </select>
+        </div>
 
-<select id="price">
-<option>30만원 이하</option>
-<option>20만원 이하</option>
-<option>전체</option>
-</select>
-</div>
-</div>
-  
-<button onclick="searchFlight()">
-최저가 검색
-</button>
+        <button id="searchBtn">
+            검색
+        </button>
+
+    </section>
+
+    <section id="results"></section>
 
 </div>
-
-<div class="result" id="result"></div>
 
 </body>
-
 </html>
-
