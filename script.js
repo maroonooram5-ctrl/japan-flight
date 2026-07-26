@@ -154,13 +154,17 @@ function searchFlight() {
 
     }else{
 
-        result.forEach(f=>{
+        result.sort((a,b)=>a.price-b.price);
 
-            html+=`
+result.forEach((f,index)=>{
+
+    html+=`
 
 <div class="card">
 
-<h3>${f.airline}</h3>
+${index===0 ? '<div class="badge">🏷️ 최저가</div>' : ''}
+
+<div class="airline">✈️ ${f.airline}</div>
 
 <p>출발 : ${departure}</p>
 
@@ -170,14 +174,19 @@ function searchFlight() {
 
 <p>${depart} ~ ${ret}</p>
 
-<p class="price">${f.price.toLocaleString()}원</p>
+<div class="price">${f.price.toLocaleString()}원</div>
+
+<div class="booking">
+    <a href="${f.url}" target="_blank">
+        공식 홈페이지 예약
+    </a>
+</div>
 
 </div>
 
 `;
 
-        });
-
+});
     }
 
     document.getElementById("result").style.display="block";
